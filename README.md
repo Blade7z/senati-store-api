@@ -75,8 +75,14 @@ cd senati-store-api
 npm install
 ```
 
-### 3. Crear archivo `.env`
-En la raíz del proyecto, crea un archivo `.env` con las siguientes variables:
+### 3. Configurar variables de entorno
+En la raíz del proyecto, copia el archivo `.env.example` como `.env` y completa con tus valores reales:
+
+```bash
+cp .env.example .env
+```
+
+Edita el archivo `.env` con tus credenciales de MongoDB Atlas:
 
 ```env
 # Puerto del servidor
