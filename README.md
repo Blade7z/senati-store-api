@@ -37,7 +37,7 @@ El proyecto está diseñado con arquitectura MVC (Model-View-Controller), separa
 |------------|---------|----------|
 | **Node.js** | - | Runtime de JavaScript |
 | **Express** | ^5.2.1 | Framework web |
-| **MongoDB** | - | Base de datos NoSQL |
+| **MongoDB Atlas** | - | Base de datos NoSQL en la nube |
 | **Mongoose** | ^9.6.1 | ODM para MongoDB |
 | **JWT** | ^9.0.3 | Autenticación |
 | **bcryptjs** | ^3.0.3 | Encriptación de contraseñas |
@@ -53,7 +53,7 @@ Antes de iniciar, asegúrate de tener instalado:
 
 - **Node.js** (versión 14 o superior)
 - **npm** o **yarn**
-- **MongoDB** (local o Atlas)
+- **Cuenta de MongoDB Atlas** (base de datos en la nube)
 
 Verifica la instalación con:
 ```bash
@@ -82,16 +82,30 @@ En la raíz del proyecto, crea un archivo `.env` con las siguientes variables:
 # Puerto del servidor
 PORT=3000
 
-# Conexión a MongoDB
-MONGODB_URI=mongodb://localhost:27017/senati-store
-# O si usas MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/senati-store
+# Conexión a MongoDB Atlas
+MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/?appName=nombre-app
 
 # Clave secreta para JWT
 JWT_SECRET=tu_clave_secreta_muy_segura_aqui
+
+# Entorno
+NODE_ENV=development
 ```
 
-### 4. Iniciar el servidor
+**Nota**: Reemplaza `usuario`, `contraseña`, `cluster` y `nombre-app` con tus credenciales reales de MongoDB Atlas.
+
+### 4. Configurar MongoDB Atlas
+
+Si no tienes MongoDB Atlas configurado:
+
+1. Ve a [MongoDB Atlas](https://www.mongodb.com/atlas) y crea una cuenta
+2. Crea un nuevo cluster (elige el plan gratuito)
+3. Crea un usuario de base de datos con permisos de lectura/escritura
+4. Configura la lista blanca de IP (agrega `0.0.0.0/0` para acceso desde cualquier IP)
+5. Obtén la cadena de conexión desde "Connect" > "Connect your application"
+6. Actualiza la variable `MONGODB_URI` en tu archivo `.env`
+
+### 5. Iniciar el servidor
 
 **Modo desarrollo** (con reinicio automático):
 ```bash
@@ -575,13 +589,13 @@ Archivo: `.env`
 # Servidor
 PORT=3000
 
-# MongoDB
-MONGODB_URI=mongodb://localhost:27017/senati-store
+# MongoDB Atlas
+MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/?appName=nombre-app
 
 # JWT
 JWT_SECRET=tu_clave_secreta_super_segura_12345
 
-# Opcional
+# Entorno
 NODE_ENV=development
 ```
 
@@ -651,9 +665,10 @@ Asegúrate de tener un archivo `.env` en la raíz del proyecto con la variable `
 
 ### Error: "Conexión a MongoDB fallida"
 Verifica que:
-- MongoDB está corriendo
-- La cadena de conexión es correcta
-- Las credenciales son válidas
+- Tu cadena de conexión de MongoDB Atlas es correcta
+- Las credenciales (usuario y contraseña) son válidas
+- El cluster está activo en MongoDB Atlas
+- La IP de tu máquina está en la lista blanca de MongoDB Atlas
 
 ### Error: "Token inválido o expirado"
 - Verifica que el token sea enviado en el header `Authorization: Bearer <token>`
@@ -673,4 +688,4 @@ Este proyecto está bajo licencia ISC.
 
 ---
 
-**Última actualización**: 7 de mayo de 2026
+**Última actualización**: 7 de mayo de 2026 (Configuración MongoDB Atlas)
